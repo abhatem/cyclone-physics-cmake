@@ -51,11 +51,15 @@ set(DEMOLIST
     sailboat
 )
 
-# Linker flags for Linux
 if(UNIX AND NOT APPLE)
+    # Linker flags for Linux
     set(LDFLAGS -lGL -lGLU -lglut)
-else()
-    message(FATAL_ERROR "This OS is not Ubuntu Linux. Aborting")
+elseif(APPLE)
+    find_package(OpenGL REQUIRED)
+    find_package(GLUT REQUIRED) 
+
+    # Linker flags for MacOS
+    set(LDFLAGS OpenGL::GL GLUT::GLUT)
 endif()
 
 # Create executables for each demo
